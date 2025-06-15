@@ -1,0 +1,10 @@
+# PyInstaller build folder
+build/
+dist/
+*.spec
+
+# __pycache__ và tạm thời
+__pycache__/
+*.pyc
+*.pyo
+
