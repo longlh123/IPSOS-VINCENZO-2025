@@ -14,8 +14,8 @@ from PyQt5.Qt import Qt
 
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib.pyplot as plt
-from ui.tabs.NPSTab import NPSTab
 from ui.widgets.multi_select import MultiSelectWidget
+from ui.tabs.ReportTab import ReportTab
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -25,6 +25,7 @@ class MainWindow(QMainWindow):
         self.logger = logging.getLogger(__name__)
 
         self.df = pd.DataFrame()
+        self.config = {}
 
         self.setWindowTitle("VINCENZO 2025")
         self.resize(1100, 800)
@@ -45,9 +46,9 @@ class MainWindow(QMainWindow):
         # Create tab widget
         self.tab_widget = QTabWidget()
 
-        self.nps_tab = NPSTab(self.df)
+        self.report_tab = ReportTab()
 
-        self.tab_widget.addTab(self.nps_tab, "NPS Report")
+        self.tab_widget.addTab(self.report_tab, "Report")
 
         self.setCentralWidget(central_widget)
 
@@ -94,6 +95,10 @@ class MainWindow(QMainWindow):
 
         return groupbox
 
+    def set_filters(self, df):
+        for column_name in self.filters.keys():
+            self.filters[column_name] = df[column_name].dropna().unique().tolist()
+
     def handle_filter_changed(self, column_name: str, value: str):
 
         filtered_df = self.df.copy()
@@ -105,9 +110,8 @@ class MainWindow(QMainWindow):
             if len(selected_items) > 0:
                 filtered_df = filtered_df.loc[filtered_df[key].isin(selected_items)]
 
-        # Cập nhật dữ liệu cho tab NPS
-        self.nps_tab.update_data(filtered_df)
-
+        # Cập nhật dữ liệu cho tab Report
+        self.report_tab.update_data(filtered_df)
 
         print(f"{column_name} changed to {value}")
 
@@ -124,22 +128,16 @@ class MainWindow(QMainWindow):
                 raise FileNotFoundError(f"Không tìm thấy file cấu hình: {config_path}")
             
             with open(config_path, "r", encoding="utf-8") as f:
-                config = json.load(f)
+                self.config = json.load(f)
             
-            self.filters = config["filters"]
-            usecols = config["dataset"]["usecols"]
-            self.df = pd.read_csv(file_path, encoding='utf-8', usecols=usecols)
+            self.filters = self.config["filters"]
 
-            # needed_cols = ["Respondent.ID", "Wave", "Region", "Province", "Segment" ,"_Q6e_Main bank","_Main bank_Comp 1","_Main bank_Comp 2","_Q9_NPS TCB","_Q9_NPS Comp 1","_Q9_NPS Comp 2"]
-
-            self.df = pd.read_csv(file_path, encoding='utf-8', usecols=usecols)
-            
-            self.filters = config["filters"]
-            
-            self.filter_group = self.create_filter_group()
+            self.df = pd.read_csv(file_path, encoding='utf-8')
 
             self.set_filters(self.df)
 
+            self.filter_group = self.create_filter_group()
+            
             self.update_from_model()
         except Exception as e:
             self.logger.error(f"Không tìm thấy file cấu hình: {config_path}")
@@ -149,18 +147,13 @@ class MainWindow(QMainWindow):
                 f"Lỗi: {e}",
             )
     
-    def set_filters(self, df):
-        for column_name in self.filters.keys():
-            self.filters[column_name] = df[column_name].dropna().unique().tolist()
-
     def update_from_model(self):
         try:
             for key, values in self.filters.items():
                 multiselectitem = self.multiselectitems[key]
                 multiselectitem.set_items(values)
-            
-            # Cập nhật dữ liệu cho tab NPS
-            self.nps_tab.update_data(self.df)
+
+            self.report_tab.update_data(self.df, self.config)
         except Exception as e:
             self.logger.error(f"Error updating model: {e}")
 

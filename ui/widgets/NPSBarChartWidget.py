@@ -29,7 +29,7 @@ class NPSBarChartWidget(QWidget):
         ax = self.ax
         ax.clear()
 
-        banks = list(self.chart_data["Main_Bank"].unique())
+        banks = list(self.chart_data["Q1"].unique())
         waves = sorted(self.chart_data["Wave"].unique())
 
         group_count = len(banks)
@@ -44,7 +44,7 @@ class NPSBarChartWidget(QWidget):
         colors = ["#008a3e", "#ffc000", "#7f7f7f"]
 
         for i, wave in enumerate(waves):
-            subset = self.chart_data[self.chart_data["Wave"] == wave].set_index("Main_Bank").reindex(banks).reset_index()
+            subset = self.chart_data[self.chart_data["Wave"] == wave].set_index("Q1").reindex(banks).reset_index()
 
             promoter = subset["Promoter"].fillna(0)
             passive = subset["Passive"].fillna(0)
