@@ -4,17 +4,18 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import json
+import re
 
 import logging
 from PyQt5.QtWidgets import (
-    QMainWindow, QWidget, QVBoxLayout, QPushButton, QLabel,
-    QFileDialog, QMessageBox, QAction, QGroupBox, QGridLayout, QComboBox, QHBoxLayout, QTabWidget
+    QApplication, QMainWindow, QWidget, QVBoxLayout, QPushButton, QLabel,
+    QFileDialog, QMessageBox, QAction, QGroupBox, QGridLayout, QComboBox, QHBoxLayout, QTabWidget, QSizePolicy
 )
 from PyQt5.Qt import Qt
 
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib.pyplot as plt
-from ui.widgets.multi_select import MultiSelectWidget
+from ui.tabs.NPSReportTab import NPSReportTab
 from ui.tabs.ReportTab import ReportTab
 
 class MainWindow(QMainWindow):
@@ -28,35 +29,38 @@ class MainWindow(QMainWindow):
         self.config = {}
 
         self.setWindowTitle("VINCENZO 2025")
-        self.resize(1100, 800)
-
-        self.filters = {}
-        
-        #Lưu trữ filter combobox
-        self.multiselectitems = {}
+        self.resize(1200, 1280)
 
         central_widget = QWidget()
         main_layout = QVBoxLayout(central_widget)
         main_layout.setContentsMargins(10, 10, 10, 10)
 
-        self.filter_group = self.create_filter_group()
-
-        main_layout.addWidget(self.filter_group, alignment=Qt.AlignTop)
+        self.create_menu_bar()
 
         # Create tab widget
         self.tab_widget = QTabWidget()
-
-        self.report_tab = ReportTab()
-
-        self.tab_widget.addTab(self.report_tab, "Report")
 
         self.setCentralWidget(central_widget)
 
         main_layout.addWidget(self.tab_widget)
 
-        self.create_menu_bar()
+        self.clear_all_tabs()
+        self.show_placeholder_tab()
 
         self.statusBar().showMessage("Ready")
+
+    def clear_all_tabs(self):
+        while self.tab_widget.count() > 0:
+            self.tab_widget.removeTab(self.tab_widget.count() - 1)
+
+    def show_placeholder_tab(self, message="Vui lòng mở file dữ liệu để xem báo cáo"):
+        placeholder_tab = QWidget()
+        layout = QVBoxLayout(placeholder_tab)
+        label = QLabel(message)
+        label.setAlignment(Qt.AlignCenter)
+        layout.addWidget(label)
+
+        self.tab_widget.addTab(placeholder_tab, "Report")
 
     def create_menu_bar(self):
         menu_bar = self.menuBar()
@@ -68,52 +72,6 @@ class MainWindow(QMainWindow):
         open_action.setShortcut("Ctrl+P")
         open_action.triggered.connect(self.load_file)
         file_menu.addAction(open_action)
-    
-    def create_filter_group(self):
-        groupbox = QGroupBox("Filter")
-        
-        form_layout = QGridLayout(groupbox)
-        form_layout.setColumnStretch(1, 1)
-
-        self.multiselectitems = {}
-        
-        row = 0
-
-        for key in self.filters:
-            form_layout.addWidget(QLabel(f"{key}:"), row, 0)
-
-            multiselectitem = MultiSelectWidget(self.filters[key])
-
-            multiselectitem.selectionChanged.connect(
-                lambda items: self.handle_filter_changed(key, items)
-            )
-                
-            form_layout.addWidget(multiselectitem, row, 1)
-            self.multiselectitems[key] = multiselectitem
-
-            row += 1
-
-        return groupbox
-
-    def set_filters(self, df):
-        for column_name in self.filters.keys():
-            self.filters[column_name] = df[column_name].dropna().unique().tolist()
-
-    def handle_filter_changed(self, column_name: str, value: str):
-
-        filtered_df = self.df.copy()
-
-        for key, values in self.filters.items():
-            multiselectitem = self.multiselectitems[key]
-            selected_items = multiselectitem.get_selected_items()
-
-            if len(selected_items) > 0:
-                filtered_df = filtered_df.loc[filtered_df[key].isin(selected_items)]
-
-        # Cập nhật dữ liệu cho tab Report
-        self.report_tab.update_data(filtered_df)
-
-        print(f"{column_name} changed to {value}")
 
     def load_file(self):
         file_path, _ = QFileDialog.getOpenFileName(self, "Chọn file CSV", "", "CSV Files (*.csv)")
@@ -127,18 +85,20 @@ class MainWindow(QMainWindow):
             if not os.path.exists(config_path):
                 raise FileNotFoundError(f"Không tìm thấy file cấu hình: {config_path}")
             
+            self.clear_all_tabs()
+
             with open(config_path, "r", encoding="utf-8") as f:
                 self.config = json.load(f)
-            
-            self.filters = self.config["filters"]
 
             self.df = pd.read_csv(file_path, encoding='utf-8')
-
-            self.set_filters(self.df)
-
-            self.filter_group = self.create_filter_group()
             
-            self.update_from_model()
+            for key, dataset in self.config.items():
+                report_tab = None
+
+                report_tab = NPSReportTab(data=self.df, dataset=dataset)
+                
+                if report_tab is not None:
+                    self.tab_widget.addTab(report_tab, dataset.get('chart_title', ''))
         except Exception as e:
             self.logger.error(f"Không tìm thấy file cấu hình: {config_path}")
             QMessageBox.critical(
@@ -147,15 +107,4 @@ class MainWindow(QMainWindow):
                 f"Lỗi: {e}",
             )
     
-    def update_from_model(self):
-        try:
-            for key, values in self.filters.items():
-                multiselectitem = self.multiselectitems[key]
-                multiselectitem.set_items(values)
-
-            self.report_tab.update_data(self.df, self.config)
-        except Exception as e:
-            self.logger.error(f"Error updating model: {e}")
-
-
 
