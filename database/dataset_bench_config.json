@@ -256,6 +256,45 @@
         },
         "i-cols" : ["ID", "Wave", "Province", "Segment"],
         "j-col" : "Order"
+    },
+    "csat-dataset-2" : {
+        "main-filters" : {
+            "Wave" : "",
+            "Province" : [],
+            "Segment" : [],
+            "S0_Sample" : []
+        },
+        "chart_name" : "CSAT",
+        "chart_title" : "CSAT Channel",
+        "chart_type" : "CSATBarChartWidget",
+        "group_by" : ["Q1", "Wave"],
+        "wide_to_long" : 1,
+        "used-cols" : [ "Respondent.ID", "Wave", "Province", "Segment", "Q1_Main Bank 1","Q9_R1_Branch_Main Bank 1","Q9_R2_Telesales_Main Bank 1","Q9_R3_Call Center_Main Bank 1","Q9_R4_Fanpage_Main Bank 1","Q9_R6_ATM_Main Bank 1","Q10_Main bank 2","Q17_R1_Branch_Main Bank 2","Q17_R2_Telesales_Main Bank 2","Q17_R3_Call Center_Main Bank 2","Q17_R4_Fanpage_Main Bank 2","Q17_R6_ATM_Main Bank 2" ],
+        "rename-columns" : {
+            "Respondent.ID" : "ID",
+            "Q1_Main Bank 1" : "Q1###1",
+            "Q9_R1_Branch_Main Bank 1" : "Q9_R1###1",
+            "Q9_R2_Telesales_Main Bank 1" : "Q9_R2###1",
+            "Q9_R3_Call Center_Main Bank 1" : "Q9_R3###1",
+            "Q9_R4_Fanpage_Main Bank 1" : "Q9_R4###1",
+            "Q9_R6_ATM_Main Bank 1" : "Q9_R6###1",
+            "Q10_Main bank 2" : "Q1###2",
+            "Q17_R1_Branch_Main Bank 2" : "Q9_R1###2",
+            "Q17_R2_Telesales_Main Bank 2" : "Q9_R2###2",
+            "Q17_R3_Call Center_Main Bank 2" : "Q9_R3###2",
+            "Q17_R4_Fanpage_Main Bank 2" : "Q9_R4###2",
+            "Q17_R6_ATM_Main Bank 2" : "Q9_R6###2"
+        }, 
+        "stubnames" : {
+            "Q1" : "Main Bank 1",
+            "Q9_R1" : "Branch",
+            "Q9_R2" : "Telesales",
+            "Q9_R3" : "Call Center",
+            "Q9_R4" : "Fanpage",
+            "Q9_R6" : "ATM"
+        },
+        "i-cols" : ["ID", "Wave", "Province", "Segment"],
+        "j-col" : "Order"
     }
     
 }

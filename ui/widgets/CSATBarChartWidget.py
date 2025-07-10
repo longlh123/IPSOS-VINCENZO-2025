@@ -60,12 +60,14 @@ class CSATBarChartWidget(QWidget):
             self.ax.text(score - 2, i, f"{int(score)}", va="center", ha="right", color="white", fontweight="bold")
 
             #Sample Size
-            self.ax.text(score + 2, i, f"(n={n})", va="center", ha="left", fontsize=8, color="gray")
+            self.ax.text(max(scores) + 2, i, f"(n={n})", va="center", ha="left", fontsize=8, color="gray")
 
             # # Change and direction
-            # arrow = "↑" if direction == "up" else ("↓" if direction == "down" else "")
-            # color = "green" if direction == "up" else ("red" if direction == "down" else "black")
-            # self.ax.text(score + 1, i, f"{change:.2f} {arrow}", va='center', ha='left', fontsize=8, color=color)
+            if change > 0:
+                arrow = "↑" if direction == "up" else ("↓" if direction == "down" else "")
+                color = "green" if direction == "up" else ("red" if direction == "down" else "black")
+                
+                self.ax.text(max(scores) + 8, i, f"{change:.2f} {arrow}", va='center', ha='left', fontsize=8, color=color)
 
             # # Rank
             # if rank:

@@ -275,23 +275,58 @@ class NPSReportTab(QWidget):
 
     def calculate_csat_components(self, group):
         total = len(group)
+        
+        months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        
+        wave = group['Wave'].unique().tolist()[0]
+        bank = group['Q1'].unique().tolist()[0]
 
-        product_list = [ "Debit Card", "Credit Card", "Banca", "Terms deposit", "Bond", "Unsecured Loan", "Secured loan" ]
+        cur_month = wave[:3]
+        cur_year = wave[-2:]
+
+        if cur_month == 'Jan':
+            cur_year -= 1
+        
+        previous_group = pd.DataFrame()
+
+        if cur_month in months:
+            previous_wave = f'{months[months.index(cur_month) - 1]}\'{cur_year}'
+
+            previous_group = self.chart_data[((self.chart_data['Wave'] == previous_wave) & (self.chart_data['Q1'] == bank))]
+
+        prev_total = len(previous_group)
+
+        if self.dataset.get('chart_title') == 'CSAT Channel':
+            product_list = ["Branch", "Telesales", "Call Center", "Fanpage", "ATM"]
+        if self.dataset.get('chart_title') == 'CSAT Product':
+            product_list = [ "Debit Card", "Credit Card", "Banca", "Terms deposit", "Bond", "Unsecured Loan", "Secured loan" ]
+        
         records = []
-
+        
         for product in product_list:
             product_group = group[group['Product'] == product]
             n = len(product_group)
-            valid = product_group[product_group['Score'] != 'I do not use this bank product']
+            valid = product_group[~product_group['Score'].isin(['Not use in recent 1 month', 'I do not use this bank product'])]
             p = round(len(valid) / total * 100, 2) if total > 0 else 0.0
+            change = 0.0
+            direction = ""
+
+            if not previous_group.empty:
+                prev_product_group = previous_group[previous_group['Product'] == product]
+                prev_n = len(prev_product_group)
+                prev_valid = prev_product_group[~prev_product_group['Score'].isin(['Not use in recent 1 month', 'I do not use this bank product'])]
+                prev_p = round(len(prev_valid) / prev_total * 100, 2) if prev_total > 0 else 0.0
+
+                change = round(p - prev_p, 1)
+                direction = "up" if change > 0 else ("down" if change < 0 else "")
 
             records.append({
                 "product" : product,
                 "n" : n,
                 "p" : p,
-                "change" : 0.0,
+                "change" : change,
                 "rank" : 0,
-                "direction" : ""
+                "direction" : direction
             })
 
         return pd.DataFrame(records)
