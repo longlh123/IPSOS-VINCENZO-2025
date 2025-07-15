@@ -11,7 +11,7 @@
         "chart_type" : "NPSBarChartWidget",
         "group_by" : ["Q1", "Wave"],
         "wide_to_long" : 1,
-        "used-cols" : [ "Respondent.ID", "Wave", "Province", "Segment", "Q1_Main Bank 1","Q2_NPS Main bank 1","Q2_1_Reason for NPS Main bank 1","Q3_Likelihood to recommend Mobile Banking_Main Bank 1","Q3_1_Reason for likelihood to recommend Mobile Banking_Main Bank 1","Q4_CSAT Product_Main Bank 1","Q5_CSAT Service_Main Bank 1","Q6_CSAT Price & Promotion_Main Bank 1","Q7_CSAT Convenience_Main Bank 1","Q8_CSAT Experience_Main Bank 1","Q9a_R1_Debit Card_Main Bank 1","Q9a_R2_Credit card_Main Bank 1","Q9a_R4_Banca_Main Bank 1","Q9a_R6_Terms deposit_Main Bank 1","Q9a_R7_Bond/Funds_Main Bank 1","Q9a_R8_Secured Loan_Main Bank 1","Q9a_R9_Unsecured Loan/ Overdraft without Collateral_Main Bank 1","Q9a_The lowest rated product's score_Main Bank 1","Q9a_The lowest rated product_Main Bank 1","Q9a_1_Reason for the lowest rated product's CSAT_Main Bank 1","Q9_R1_Branch_Main Bank 1","Q9_R2_Telesales_Main Bank 1","Q9_R3_Call Center_Main Bank 1","Q9_R4_Fanpage_Main Bank 1","Q9_R6_ATM_Main Bank 1","Q9_The lowest rated channel's score_Main Bank 1","Q9_The lowest rated channel_Main Bank 1","Q9_1_Reason for the lowest rated channel's CSAT_Main Bank 1","Q10_Main bank 2","Q11_NPS Main bank 2","Q11_1_Reason for NPS Main bank 2","Q31_Likelihood to recommend Mobile Banking_Main Bank 2","Q31_1_Reason for likelihood to recommend Mobile Banking_Main Bank 2","Q12_CSAT Product_Main Bank 2","Q13_CSAT Service_Main Bank 2","Q14_CSAT Price & Promotion_Main Bank 2","Q15_CSAT Convenience_Main Bank 2","Q16_CSAT Experience_Main Bank 2","Q17a_R1_Debit Card_Main Bank 2","Q17a_R2_Credit card_Main Bank 2","Q17a_R4_Banca_Main Bank 2","Q17a_R6_Terms deposit_Main Bank 2","Q17a_R7_Bond/Funds_Main Bank 2","Q17a_R8_Secured Loan_Main Bank 2","Q17a_R9_Unsecured Loan/ Overdraft without Collateral_Main Bank 2","Q17a_The lowest rated product's score_Main Bank 2","Q17a_The lowest rated product_Main Bank 2","Q17a_1_Reason for the lowest rated product's CSAT_Main Bank 2","Q17_R1_Branch_Main Bank 2","Q17_R2_Telesales_Main Bank 2","Q17_R3_Call Center_Main Bank 2","Q17_R4_Fanpage_Main Bank 2","Q17_R6_ATM_Main Bank 2","Q17_The lowest rated channel's score_Main Bank 2","Q17_The lowest rated channel_Main Bank 2","Q17_1_Reason for the lowest rated channel's CSAT_Main Bank 2" ],
+        "used-cols" : [ "Respondent.ID", "Wave", "Province", "Segment", "S0_Sample", "Q1_Main Bank 1","Q2_NPS Main bank 1","Q2_1_Reason for NPS Main bank 1","Q3_Likelihood to recommend Mobile Banking_Main Bank 1","Q3_1_Reason for likelihood to recommend Mobile Banking_Main Bank 1","Q4_CSAT Product_Main Bank 1","Q5_CSAT Service_Main Bank 1","Q6_CSAT Price & Promotion_Main Bank 1","Q7_CSAT Convenience_Main Bank 1","Q8_CSAT Experience_Main Bank 1","Q9a_R1_Debit Card_Main Bank 1","Q9a_R2_Credit card_Main Bank 1","Q9a_R4_Banca_Main Bank 1","Q9a_R6_Terms deposit_Main Bank 1","Q9a_R7_Bond/Funds_Main Bank 1","Q9a_R8_Secured Loan_Main Bank 1","Q9a_R9_Unsecured Loan/ Overdraft without Collateral_Main Bank 1","Q9a_The lowest rated product's score_Main Bank 1","Q9a_The lowest rated product_Main Bank 1","Q9a_1_Reason for the lowest rated product's CSAT_Main Bank 1","Q9_R1_Branch_Main Bank 1","Q9_R2_Telesales_Main Bank 1","Q9_R3_Call Center_Main Bank 1","Q9_R4_Fanpage_Main Bank 1","Q9_R6_ATM_Main Bank 1","Q9_The lowest rated channel's score_Main Bank 1","Q9_The lowest rated channel_Main Bank 1","Q9_1_Reason for the lowest rated channel's CSAT_Main Bank 1","Q10_Main bank 2","Q11_NPS Main bank 2","Q11_1_Reason for NPS Main bank 2","Q31_Likelihood to recommend Mobile Banking_Main Bank 2","Q31_1_Reason for likelihood to recommend Mobile Banking_Main Bank 2","Q12_CSAT Product_Main Bank 2","Q13_CSAT Service_Main Bank 2","Q14_CSAT Price & Promotion_Main Bank 2","Q15_CSAT Convenience_Main Bank 2","Q16_CSAT Experience_Main Bank 2","Q17a_R1_Debit Card_Main Bank 2","Q17a_R2_Credit card_Main Bank 2","Q17a_R4_Banca_Main Bank 2","Q17a_R6_Terms deposit_Main Bank 2","Q17a_R7_Bond/Funds_Main Bank 2","Q17a_R8_Secured Loan_Main Bank 2","Q17a_R9_Unsecured Loan/ Overdraft without Collateral_Main Bank 2","Q17a_The lowest rated product's score_Main Bank 2","Q17a_The lowest rated product_Main Bank 2","Q17a_1_Reason for the lowest rated product's CSAT_Main Bank 2","Q17_R1_Branch_Main Bank 2","Q17_R2_Telesales_Main Bank 2","Q17_R3_Call Center_Main Bank 2","Q17_R4_Fanpage_Main Bank 2","Q17_R6_ATM_Main Bank 2","Q17_The lowest rated channel's score_Main Bank 2","Q17_The lowest rated channel_Main Bank 2","Q17_1_Reason for the lowest rated channel's CSAT_Main Bank 2" ],
         "rename-columns" : {
             "Respondent.ID" : "ID",
             "Q1_Main Bank 1" : "Q1###1",
@@ -101,7 +101,7 @@
             "Q9" : "The lowest rated channel",
             "Q9_Text" : "Reason for the lowest rated channel's CSAT"
         },
-        "i-cols" : ["ID", "Wave", "Province", "Segment"],
+        "i-cols" : ["ID", "Wave", "Province", "Segment", "S0_Sample"],
         "j-col" : "Order"
     },
     "nps-dataset-2" : {
@@ -119,7 +119,7 @@
             "Q1" : ""
         },
         "wide_to_long" : 1,
-        "used-cols" : [ "Respondent.ID", "Wave", "Province", "Segment", "Q1_Main Bank 1","Q2_NPS Main bank 1","Q2_1_Reason for NPS Main bank 1","Q3_Likelihood to recommend Mobile Banking_Main Bank 1","Q3_1_Reason for likelihood to recommend Mobile Banking_Main Bank 1","Q4_CSAT Product_Main Bank 1","Q5_CSAT Service_Main Bank 1","Q6_CSAT Price & Promotion_Main Bank 1","Q7_CSAT Convenience_Main Bank 1","Q8_CSAT Experience_Main Bank 1","Q9a_R1_Debit Card_Main Bank 1","Q9a_R2_Credit card_Main Bank 1","Q9a_R4_Banca_Main Bank 1","Q9a_R6_Terms deposit_Main Bank 1","Q9a_R7_Bond/Funds_Main Bank 1","Q9a_R8_Secured Loan_Main Bank 1","Q9a_R9_Unsecured Loan/ Overdraft without Collateral_Main Bank 1","Q9a_The lowest rated product's score_Main Bank 1","Q9a_The lowest rated product_Main Bank 1","Q9a_1_Reason for the lowest rated product's CSAT_Main Bank 1","Q9_R1_Branch_Main Bank 1","Q9_R2_Telesales_Main Bank 1","Q9_R3_Call Center_Main Bank 1","Q9_R4_Fanpage_Main Bank 1","Q9_R6_ATM_Main Bank 1","Q9_The lowest rated channel's score_Main Bank 1","Q9_The lowest rated channel_Main Bank 1","Q9_1_Reason for the lowest rated channel's CSAT_Main Bank 1","Q10_Main bank 2","Q11_NPS Main bank 2","Q11_1_Reason for NPS Main bank 2","Q31_Likelihood to recommend Mobile Banking_Main Bank 2","Q31_1_Reason for likelihood to recommend Mobile Banking_Main Bank 2","Q12_CSAT Product_Main Bank 2","Q13_CSAT Service_Main Bank 2","Q14_CSAT Price & Promotion_Main Bank 2","Q15_CSAT Convenience_Main Bank 2","Q16_CSAT Experience_Main Bank 2","Q17a_R1_Debit Card_Main Bank 2","Q17a_R2_Credit card_Main Bank 2","Q17a_R4_Banca_Main Bank 2","Q17a_R6_Terms deposit_Main Bank 2","Q17a_R7_Bond/Funds_Main Bank 2","Q17a_R8_Secured Loan_Main Bank 2","Q17a_R9_Unsecured Loan/ Overdraft without Collateral_Main Bank 2","Q17a_The lowest rated product's score_Main Bank 2","Q17a_The lowest rated product_Main Bank 2","Q17a_1_Reason for the lowest rated product's CSAT_Main Bank 2","Q17_R1_Branch_Main Bank 2","Q17_R2_Telesales_Main Bank 2","Q17_R3_Call Center_Main Bank 2","Q17_R4_Fanpage_Main Bank 2","Q17_R6_ATM_Main Bank 2","Q17_The lowest rated channel's score_Main Bank 2","Q17_The lowest rated channel_Main Bank 2","Q17_1_Reason for the lowest rated channel's CSAT_Main Bank 2" ],
+        "used-cols" : [ "Respondent.ID", "Wave", "Province", "Segment", "S0_Sample", "Q1_Main Bank 1","Q2_NPS Main bank 1","Q2_1_Reason for NPS Main bank 1","Q3_Likelihood to recommend Mobile Banking_Main Bank 1","Q3_1_Reason for likelihood to recommend Mobile Banking_Main Bank 1","Q4_CSAT Product_Main Bank 1","Q5_CSAT Service_Main Bank 1","Q6_CSAT Price & Promotion_Main Bank 1","Q7_CSAT Convenience_Main Bank 1","Q8_CSAT Experience_Main Bank 1","Q9a_R1_Debit Card_Main Bank 1","Q9a_R2_Credit card_Main Bank 1","Q9a_R4_Banca_Main Bank 1","Q9a_R6_Terms deposit_Main Bank 1","Q9a_R7_Bond/Funds_Main Bank 1","Q9a_R8_Secured Loan_Main Bank 1","Q9a_R9_Unsecured Loan/ Overdraft without Collateral_Main Bank 1","Q9a_The lowest rated product's score_Main Bank 1","Q9a_The lowest rated product_Main Bank 1","Q9a_1_Reason for the lowest rated product's CSAT_Main Bank 1","Q9_R1_Branch_Main Bank 1","Q9_R2_Telesales_Main Bank 1","Q9_R3_Call Center_Main Bank 1","Q9_R4_Fanpage_Main Bank 1","Q9_R6_ATM_Main Bank 1","Q9_The lowest rated channel's score_Main Bank 1","Q9_The lowest rated channel_Main Bank 1","Q9_1_Reason for the lowest rated channel's CSAT_Main Bank 1","Q10_Main bank 2","Q11_NPS Main bank 2","Q11_1_Reason for NPS Main bank 2","Q31_Likelihood to recommend Mobile Banking_Main Bank 2","Q31_1_Reason for likelihood to recommend Mobile Banking_Main Bank 2","Q12_CSAT Product_Main Bank 2","Q13_CSAT Service_Main Bank 2","Q14_CSAT Price & Promotion_Main Bank 2","Q15_CSAT Convenience_Main Bank 2","Q16_CSAT Experience_Main Bank 2","Q17a_R1_Debit Card_Main Bank 2","Q17a_R2_Credit card_Main Bank 2","Q17a_R4_Banca_Main Bank 2","Q17a_R6_Terms deposit_Main Bank 2","Q17a_R7_Bond/Funds_Main Bank 2","Q17a_R8_Secured Loan_Main Bank 2","Q17a_R9_Unsecured Loan/ Overdraft without Collateral_Main Bank 2","Q17a_The lowest rated product's score_Main Bank 2","Q17a_The lowest rated product_Main Bank 2","Q17a_1_Reason for the lowest rated product's CSAT_Main Bank 2","Q17_R1_Branch_Main Bank 2","Q17_R2_Telesales_Main Bank 2","Q17_R3_Call Center_Main Bank 2","Q17_R4_Fanpage_Main Bank 2","Q17_R6_ATM_Main Bank 2","Q17_The lowest rated channel's score_Main Bank 2","Q17_The lowest rated channel_Main Bank 2","Q17_1_Reason for the lowest rated channel's CSAT_Main Bank 2" ],
         "rename-columns" : {
             "Respondent.ID" : "ID",
             "Q1_Main Bank 1" : "Q1###1",
@@ -209,7 +209,7 @@
             "Q9" : "The lowest rated channel",
             "Q9_Text" : "Reason for the lowest rated channel's CSAT"
         },
-        "i-cols" : ["ID", "Wave", "Province", "Segment"],
+        "i-cols" : ["ID", "Wave", "Province", "Segment", "S0_Sample"],
         "j-col" : "Order"
     },
     "csat-dataset-1" : {
@@ -224,7 +224,7 @@
         "chart_type" : "CSATBarChartWidget",
         "group_by" : ["Wave", "Q1"],
         "wide_to_long" : 1,
-        "used-cols" : [ "Respondent.ID", "Wave", "Province", "Segment", "Q1_Main Bank 1","Q9a_R1_Debit Card_Main Bank 1","Q9a_R2_Credit card_Main Bank 1","Q9a_R4_Banca_Main Bank 1","Q9a_R6_Terms deposit_Main Bank 1","Q9a_R7_Bond/Funds_Main Bank 1","Q9a_R8_Secured Loan_Main Bank 1","Q9a_R9_Unsecured Loan/ Overdraft without Collateral_Main Bank 1","Q10_Main bank 2","Q17a_R1_Debit Card_Main Bank 2","Q17a_R2_Credit card_Main Bank 2","Q17a_R4_Banca_Main Bank 2","Q17a_R6_Terms deposit_Main Bank 2","Q17a_R7_Bond/Funds_Main Bank 2","Q17a_R8_Secured Loan_Main Bank 2","Q17a_R9_Unsecured Loan/ Overdraft without Collateral_Main Bank 2" ],
+        "used-cols" : [ "Respondent.ID", "Wave", "Province", "Segment", "S0_Sample", "Q1_Main Bank 1","Q9a_R1_Debit Card_Main Bank 1","Q9a_R2_Credit card_Main Bank 1","Q9a_R4_Banca_Main Bank 1","Q9a_R6_Terms deposit_Main Bank 1","Q9a_R7_Bond/Funds_Main Bank 1","Q9a_R8_Secured Loan_Main Bank 1","Q9a_R9_Unsecured Loan/ Overdraft without Collateral_Main Bank 1","Q10_Main bank 2","Q17a_R1_Debit Card_Main Bank 2","Q17a_R2_Credit card_Main Bank 2","Q17a_R4_Banca_Main Bank 2","Q17a_R6_Terms deposit_Main Bank 2","Q17a_R7_Bond/Funds_Main Bank 2","Q17a_R8_Secured Loan_Main Bank 2","Q17a_R9_Unsecured Loan/ Overdraft without Collateral_Main Bank 2" ],
         "rename-columns" : {
             "Respondent.ID" : "ID",
             "Q1_Main Bank 1" : "Q1###1",
@@ -234,6 +234,7 @@
             "Q9a_R6_Terms deposit_Main Bank 1" : "Q9a_R6###1",
             "Q9a_R7_Bond/Funds_Main Bank 1" : "Q9a_R7###1",
             "Q9a_R8_Secured Loan_Main Bank 1" : "Q9a_R8###1",
+            "Q9a_R9_Unsecured Loan/ Overdraft without Collateral_Main Bank 1" : "Q9a_R9###1",
             "Q9a_The lowest rated product_Main Bank 1" : "Q9a###1",
             "Q10_Main bank 2" : "Q1###2",
             "Q17a_R1_Debit Card_Main Bank 2" : "Q9a_R1###2",
@@ -254,7 +255,7 @@
             "Q9a_R8" : "Secured Loan",
             "Q9a_R9" : "Unsecured Loan"
         },
-        "i-cols" : ["ID", "Wave", "Province", "Segment"],
+        "i-cols" : ["ID", "Wave", "Province", "Segment", "S0_Sample"],
         "j-col" : "Order"
     },
     "csat-dataset-2" : {
@@ -269,7 +270,7 @@
         "chart_type" : "CSATBarChartWidget",
         "group_by" : ["Q1", "Wave"],
         "wide_to_long" : 1,
-        "used-cols" : [ "Respondent.ID", "Wave", "Province", "Segment", "Q1_Main Bank 1","Q9_R1_Branch_Main Bank 1","Q9_R2_Telesales_Main Bank 1","Q9_R3_Call Center_Main Bank 1","Q9_R4_Fanpage_Main Bank 1","Q9_R6_ATM_Main Bank 1","Q10_Main bank 2","Q17_R1_Branch_Main Bank 2","Q17_R2_Telesales_Main Bank 2","Q17_R3_Call Center_Main Bank 2","Q17_R4_Fanpage_Main Bank 2","Q17_R6_ATM_Main Bank 2" ],
+        "used-cols" : [ "Respondent.ID", "Wave", "Province", "Segment", "S0_Sample", "Q1_Main Bank 1","Q9_R1_Branch_Main Bank 1","Q9_R2_Telesales_Main Bank 1","Q9_R3_Call Center_Main Bank 1","Q9_R4_Fanpage_Main Bank 1","Q9_R6_ATM_Main Bank 1","Q10_Main bank 2","Q17_R1_Branch_Main Bank 2","Q17_R2_Telesales_Main Bank 2","Q17_R3_Call Center_Main Bank 2","Q17_R4_Fanpage_Main Bank 2","Q17_R6_ATM_Main Bank 2" ],
         "rename-columns" : {
             "Respondent.ID" : "ID",
             "Q1_Main Bank 1" : "Q1###1",
@@ -293,7 +294,7 @@
             "Q9_R4" : "Fanpage",
             "Q9_R6" : "ATM"
         },
-        "i-cols" : ["ID", "Wave", "Province", "Segment"],
+        "i-cols" : ["ID", "Wave", "Province", "Segment", "S0_Sample"],
         "j-col" : "Order"
     }
     
