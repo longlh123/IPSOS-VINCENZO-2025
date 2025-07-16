@@ -86,6 +86,16 @@ class NPSReportTab(QWidget):
         filtered_chart_data = self.chart_data.copy()
         filtered_chart_data.reset_index(inplace=True)
         
+        for key, values in self.filters.items():
+            if key in self.multiselectitems:
+                multiselectitem = self.multiselectitems[key]
+                selected_items = multiselectitem.get_selected_items()
+            elif key in self.comboboxitems:
+                selected_items = [self.comboboxitems[key].currentText()]
+
+            if len(selected_items) > 0:
+                filtered_chart_data = filtered_chart_data.loc[filtered_chart_data[key].isin(selected_items)]
+
         for key, values in self.dataset_filters.items():
             
             if key in self.multiselectitems:
@@ -101,16 +111,6 @@ class NPSReportTab(QWidget):
             filtered_chart_data = filtered_chart_data.groupby(self.dataset.get('group_by', [])).apply(self.calculate_nps_components).reset_index()
         elif self.dataset.get('chart_name') == "CSAT":
             filtered_chart_data = filtered_chart_data.groupby(self.dataset.get('group_by', [])).apply(self.calculate_csat_components).reset_index()
-        
-        for key, values in self.filters.items():
-            if key in self.multiselectitems:
-                multiselectitem = self.multiselectitems[key]
-                selected_items = multiselectitem.get_selected_items()
-            elif key in self.comboboxitems:
-                selected_items = [self.comboboxitems[key].currentText()]
-
-            if len(selected_items) > 0:
-                filtered_chart_data = filtered_chart_data.loc[filtered_chart_data[key].isin(selected_items)]
 
         self.clear_layout()
 
@@ -266,7 +266,7 @@ class NPSReportTab(QWidget):
         index_list.append("Q1")
 
         df_stack = df_nps_long.set_index(index_list).stack().reset_index()
-        df_stack.rename(columns={ 'level_5' : 'Product', 0 : 'Score' }, inplace=True)
+        df_stack.rename(columns={ 'level_6' : 'Product', 0 : 'Score' }, inplace=True)
         df_stack['Product'].replace(self.dataset.get('stubnames', {}), inplace=True)
 
         df_stack = df_stack.dropna(subset=["Product", "Score"])
