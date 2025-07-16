@@ -1,0 +1,204 @@
+{
+    "nps-dataset-1" : {
+        "main-filters" : {
+            "Wave" : [],
+            "Province" : [],
+            "Segment" : [],
+            "Region" : [],
+            "_Q5_Customer Type" : [],
+            "_Q4Bis_Tier" : [],
+            "_Q5a_Persona" : []
+        },
+        "group_by" : ["Bank", "Wave"],
+        "used-cols" : [ "Respondent.ID", "Wave", "Province", "Segment", "Region", "_Q5_Customer Type", "_Q4Bis_Tier", "_Q5a_Persona", "_Q6e_Main bank",	"_Main bank_Comp 1", "_Main bank_Comp 2", "_Q9_NPS TCB", "_Q9_NPS Comp 1", "_Q9_NPS Comp 2" ],
+        "replaced-columns" : {
+            "_Q6e_Main bank" : "Techcombank"
+        },
+        "rename-columns" : {
+            "Respondent.ID" : "ID",
+            "_Q6e_Main bank" : "Bank###1",
+            "_Q9_NPS TCB" : "NPS_Score###1",
+            "_Main bank_Comp 1" : "Bank###2",
+            "_Q9_NPS Comp 1" : "NPS_Score###2",
+            "_Main bank_Comp 2" : "Bank###3", 
+            "_Q9_NPS Comp 2" : "NPS_Score###3"
+        }, 
+        "wide_to_long" : {
+            "stubnames" : {
+                "Bank" : "Main Bank 1",
+                "NPS_Score" : "NPS"
+            },
+            "i-cols" : ["ID", "Wave", "Province", "Segment", "Region", "_Q5_Customer Type", "_Q4Bis_Tier", "_Q5a_Persona" ],
+            "j-col" : "Order"
+        },
+        "drop-na-columns" : ["Bank", "NPS_Score"],
+        "chart" : {
+            "name" : "NPS",
+            "title" : "NPS Product",
+            "type" : "NPSBarChartWidget",
+            "xAxis" : {
+                "label" : "NPS_Score",
+                "format" : "percent",
+                "min" : 0,
+                "max" : 100
+            },
+            "yAxis" : {
+                "label" : "Bank",
+                "categories" : ["ACB", "BIDV", "MBBank", "Techcombank", "VPBank", "Vietcombank"]
+            },
+            "style": {
+                "barColor": "#4caf50",
+                "barHeight": 20,
+                "gap": 10,
+                "showValueLabel": true
+            }
+        }
+    },
+    "nps-dataset-2" : {
+        "main-filters" : {
+            "Wave" : [],
+            "Province" : [],
+            "Segment" : [],
+            "Region" : [],
+            "_Q5_Customer Type" : [],
+            "_Q4Bis_Tier" : [],
+            "_Q5a_Persona" : []
+        },
+        "group_by" : [ "Wave" ],
+        "dataset-filters" : {
+            "Bank" : ""
+        },
+        "used-cols" : [ "Respondent.ID", "Wave", "Province", "Segment", "Region", "_Q5_Customer Type", "_Q4Bis_Tier", "_Q5a_Persona", "_Q6e_Main bank",	"_Main bank_Comp 1", "_Main bank_Comp 2", "_Q9_NPS TCB", "_Q9_NPS Comp 1", "_Q9_NPS Comp 2" ],
+        "replaced-columns" : {
+            "_Q6e_Main bank" : "Techcombank"
+        },
+        "rename-columns" : {
+            "Respondent.ID" : "ID",
+            "_Q6e_Main bank" : "Bank###1",
+            "_Q9_NPS TCB" : "NPS_Score###1",
+            "_Main bank_Comp 1" : "Bank###2",
+            "_Q9_NPS Comp 1" : "NPS_Score###2",
+            "_Main bank_Comp 2" : "Bank###3", 
+            "_Q9_NPS Comp 2" : "NPS_Score###3"
+        }, 
+        "wide_to_long" : {
+            "stubnames" : {
+                "Bank" : "Main Bank 1",
+                "NPS_Score" : "NPS"
+            },
+            "i-cols" : ["ID", "Wave", "Province", "Segment", "Region", "_Q5_Customer Type", "_Q4Bis_Tier", "_Q5a_Persona" ],
+            "j-col" : "Order"
+        },
+        "drop-na-columns" : ["Bank", "NPS_Score"],
+        "chart" : {
+            "name" : "NPS",
+            "title" : "NPS Product",
+            "type" : "NPSBarChartDefaultWidget",
+            "xAxis" : {
+                "label" : "NPS_Score",
+                "format" : "percent",
+                "min" : 0,
+                "max" : 100
+            },
+            "yAxis" : {
+                "label" : "Bank",
+                "categories" : ["ACB", "BIDV", "MBBank", "Techcombank", "VPBank", "Vietcombank"]
+            },
+            "style": {
+                "barColor": "#4caf50",
+                "barHeight": 20,
+                "gap": 10,
+                "showValueLabel": true
+            }
+        }
+    },
+    "csat-dataset-1" : {
+        "main-filters" : {
+            "Wave" : "",
+            "Province" : [],
+            "Segment" : [],
+            "Region" : [],
+            "_Q5_Customer Type" : [],
+            "_Q4Bis_Tier" : [],
+            "_Q5a_Persona" : []
+        },
+        "group_by" : ["Bank", "Wave"],
+        "used-cols" : [ "Respondent.ID", "Wave", "Province", "Segment", "Region", "_Q5_Customer Type", "_Q4Bis_Tier", "_Q5a_Persona", "_Q6e_Main bank", "_Q6bis_Product", "_Q20a_Overall CSAT Product" ],
+        "replaced-columns" : {
+            "_Q6e_Main bank" : "Techcombank"
+        },
+        "rename-columns" : {
+            "Respondent.ID" : "ID",
+            "_Q6e_Main bank" : "Bank",
+            "_Q6bis_Product" : "Product",
+            "_Q20a_Overall CSAT Product" : "CSAT_Score"
+        },
+        "drop-na-columns" : ["Product", "CSAT_Score"],
+        "chart" : {
+            "name" : "CSAT",
+            "title" : "CSAT Product",
+            "type" : "CSATBarChartWidget",
+            "xAxis" : {
+                "label" : "CSAT_Score",
+                "format" : "number",
+                "min" : 0,
+                "max" : 100
+            },
+            "yAxis" : {
+                "label" : "Product",
+                "categories" : [ "Term Deposit", "Shopcash", "PIL", "AE", "Bon Funds", "Credit Card", "Banca life", "Mycash", "Mortgage Primary", "Mortgage Secondary", "Banca non-life", "Soft POS", "Debit Card" ]
+            },
+            "style": {
+                "barColor": "#4caf50",
+                "barHeight": 20,
+                "gap": 10,
+                "showValueLabel": true
+            }
+        }
+    },
+    "csat-dataset-2" : {
+        "main-filters" : {
+            "Wave" : "",
+            "Province" : [],
+            "Segment" : [],
+            "Region" : [],
+            "_Q5_Customer Type" : [],
+            "_Q4Bis_Tier" : [],
+            "_Q5a_Persona" : []
+        },
+        "group_by" : ["Bank", "Wave"],
+        "used-cols" : [ "Respondent.ID", "Wave", "Province", "Segment", "Region", "_Q5_Customer Type", "_Q4Bis_Tier", "_Q5a_Persona", "_Q6e_Main bank", "_Q7bis_Choose_Channel chosen to ask", "_Q23a_Overall CSAT Channel" ],
+        "replaced-columns" : {
+            "_Q6e_Main bank" : "Techcombank"
+        },
+        "rename-columns" : {
+            "Respondent.ID" : "ID",
+            "_Q6e_Main bank" : "Bank",
+            "_Q7bis_Choose_Channel chosen to ask" : "Channel",
+            "_Q23a_Overall CSAT Channel" : "CSAT_Score"
+        },
+        "drop-na-columns" : ["Channel", "CSAT_Score"],
+        "chart" : {
+            "name" : "CSAT",
+            "title" : "CSAT Channel",
+            "type" : "CSATBarChartWidget",
+            "xAxis" : {
+                "label" : "CSAT_Score",
+                "format" : "number",
+                "min" : 0,
+                "max" : 100
+            },
+            "yAxis" : {
+                "label" : "Channel",
+                "categories" : [ "Branch", "Call center", "Techcombank online banking", "Mobile App", "Fanpage", "Telesales", "Public Website", "ATM" ]
+            },
+            "style": {
+                "barColor": "#4caf50",
+                "barHeight": 20,
+                "gap": 10,
+                "showValueLabel": true
+            }
+        }
+    }
+    
+}
