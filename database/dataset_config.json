@@ -1,0 +1,11 @@
+{
+    "nps-dataset-1": 
+    {
+        "main-filters" : {
+            "Wave" : [],
+            "S1c" : [],
+            "Q0" : [],
+            "S0" : []
+        }
+    }
+}
