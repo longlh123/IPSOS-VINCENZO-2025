@@ -8,3 +8,7 @@ __pycache__/
 *.pyc
 *.pyo
 
+env/
+*.xlsx
+*.csv
+*.log
