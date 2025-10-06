@@ -15,7 +15,6 @@ from PyQt5.Qt import Qt
 
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib.pyplot as plt
-from ui.tabs.NPSReportTab import NPSReportTab
 from ui.tabs.ReportTab import ReportTab
 
 class MainWindow(QMainWindow):
@@ -95,10 +94,10 @@ class MainWindow(QMainWindow):
             for key, dataset in self.config.items():
                 report_tab = None
 
-                report_tab = NPSReportTab(data=self.df, dataset=dataset)
+                report_tab = ReportTab(data=self.df, dataset=dataset)
                 
                 if report_tab is not None:
-                    self.tab_widget.addTab(report_tab, dataset.get('chart', {}).get('title', ''))
+                    self.tab_widget.addTab(report_tab, dataset.get('title', ''))
         except Exception as e:
             self.logger.error(f"Không tìm thấy file cấu hình: {config_path}")
             QMessageBox.critical(

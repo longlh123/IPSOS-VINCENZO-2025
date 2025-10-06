@@ -1,255 +1,79 @@
 {
     "nps-dataset-1" : {
+        "title": "BENCHMARKING",
+        "time-mode" : [
+            { "name": "wave", "label": "Wave", "checked": 1 },
+            { "name": "quarter", "label": "Quarter", "checked": 0 }
+        ],
         "main-filters" : {
             "Wave" : [],
-            "Province" : [],
+            "Quarter" : [],
+            "Bank" : [],
             "Segment" : [],
-            "S0_Sample" : []
+            "City" : [],
+            "Sample" : []
         },
-        "group_by" : ["Bank", "Wave"],
-        "used-cols" : [ "Respondent.ID", "Wave", "Province", "Segment", "S0_Sample", "Q1_Main Bank 1","Q2_NPS Main bank 1","Q10_Main bank 2","Q11_NPS Main bank 2" ],
-        "rename-columns" : {
-            "Respondent.ID" : "ID",
-            "Q1_Main Bank 1" : "Bank###1",
-            "Q2_NPS Main bank 1" : "NPS_Score###1",
-            "Q10_Main bank 2" : "Bank###2",
-            "Q11_NPS Main bank 2" : "NPS_Score###2"
+        "group-by" : ["Bank", "Wave", "Quarter"],
+        "used-cols" : [ "DummyID", "Wave", "Quarter", "S1c", "Q0", "S0", "Q1", "Q2", "Q9a_R1", "Q9a_R2", "Q9a_R4", "Q9a_R6", "Q9a_R7", "Q9a_R8", "Q9a_R9", "Q9_R1", "Q9_R2", "Q9_R3", "Q9_R4", "Q9_R6" ],
+        "renamed-columns" : {
+            "DummyID" : "ID",
+            "Q0": "Segment",
+            "S1c": "City",
+            "S0": "Sample",
+            "Q1" : "Bank",
+            "Q2" : "NPS_Score"
         },
-        "wide_to_long" : {
-            "stubnames" : {
-                "Bank" : "Main Bank",
-                "NPS_Score" : "NPS"
+        "charts" : [
+            {
+                "name" : "NPS",
+                "title" : "NPS Product",
+                "type" : "NPSBarChartWidget",
+                "xAxis" : {
+                    "label" : "NPS_Score",
+                    "format" : "percent",
+                    "min" : 0,
+                    "max" : 100
+                },
+                "yAxis" : {
+                    "label" : "Bank",
+                    "categories" : ["ACB", "BIDV", "MBBank", "Techcombank", "VPBank", "Vietcombank"]
+                },
+                "style": {
+                    "colors": ["#008a3e", "#ffc000", "#7f7f7f"],
+                    "barHeight": 20,
+                    "gap": 10,
+                    "showValueLabel": true
+                }
             },
-            "i-cols" : ["ID", "Wave", "Province", "Segment", "S0_Sample"],
-            "j-col" : "Order"
-        },
-        "drop-na-columns" : ["Bank", "NPS_Score"],
-        "chart" : {
-            "name" : "NPS",
-            "title" : "NPS Product",
-            "type" : "NPSBarChartWidget",
-            "xAxis" : {
-                "label" : "NPS_Score",
-                "format" : "percent",
-                "min" : 0,
-                "max" : 100
-            },
-            "yAxis" : {
-                "label" : "Bank",
-                "categories" : ["ACB", "BIDV", "MBBank", "Techcombank", "VPBank", "Vietcombank"]
-            },
-            "style": {
-                "barColor": "#4caf50",
-                "barHeight": 20,
-                "gap": 10,
-                "showValueLabel": true
+            {
+                "name" : "CSAT",
+                "title" : "CSAT Product",
+                "type" : "CSATBarChartWidget",
+                "filter-mapping": {
+                    "Branch": "Q9_R1",
+                    "Telesales": "Q9_R2",
+                    "Call Center": "Q9_R3",
+                    "Fanpage": "Q9_R4",
+                    "ATM": "Q9_R6"
+                },
+                "xAxis" : {
+                    "label" : "Q9_R1",
+                    "categories" : [ "CSAT_5", "CSAT_4", "CSAT_3", "CSAT_2", "CSAT_1" ],
+                    "format" : "percent",
+                    "min" : 0,
+                    "max" : 100
+                },
+                "yAxis" : {
+                    "label" : "Bank",
+                    "categories" : ["ACB", "BIDV", "MBBank", "Techcombank", "VPBank", "Vietcombank"]
+                },
+                "style": {
+                    "colors": ["#4caf50","#e3e4e6","#e3e4e6","#e3e4e6","#e3e4e6"],
+                    "barHeight": 20,
+                    "gap": 10,
+                    "showValueLabel": true
+                }
             }
-        }
-    },
-    "nps-dataset-2" : {
-        "main-filters" : {
-            "Wave" : [],
-            "Province" : [],
-            "Segment" : [],
-            "S0_Sample" : []
-        },
-        "group_by" : ["Wave"],
-        "dataset-filters" : {
-            "Bank" : ""
-        },
-        "used-cols" : [ "Respondent.ID", "Wave", "Province", "Segment", "S0_Sample", "Q1_Main Bank 1","Q2_NPS Main bank 1","Q10_Main bank 2","Q11_NPS Main bank 2" ],
-        "rename-columns" : {
-            "Respondent.ID" : "ID",
-            "Q1_Main Bank 1" : "Bank###1",
-            "Q2_NPS Main bank 1" : "NPS_Score###1",
-            "Q10_Main bank 2" : "Bank###2",
-            "Q11_NPS Main bank 2" : "NPS_Score###2"
-        }, 
-        "wide_to_long" : {
-            "stubnames" : {
-                "Bank" : "Main Bank",
-                "NPS_Score" : "NPS"
-            },
-            "i-cols" : ["ID", "Wave", "Province", "Segment", "S0_Sample"],
-            "j-col" : "Order"
-        },
-        "drop-na-columns" : ["Bank", "NPS_Score"],
-        "chart" : {
-            "name" : "NPS",
-            "title" : "NPS Product",
-            "type" : "NPSBarChartDefaultWidget",
-            "xAxis" : {
-                "label" : "NPS_Score",
-                "format" : "percent",
-                "min" : 0,
-                "max" : 100
-            },
-            "yAxis" : {
-                "label" : "Bank",
-                "categories" : ["Branch", "Telesales", "Call Center", "Fanpage", "ATM"]
-            },
-            "style": {
-                "barColor": "#4caf50",
-                "barHeight": 20,
-                "gap": 10,
-                "showValueLabel": true
-            }
-        }
-    },
-    "csat-dataset-1" : {
-        "main-filters" : {
-            "Wave" : "",
-            "Province" : [],
-            "Segment" : [],
-            "S0_Sample" : []
-        },
-        "group_by" : ["Wave", "Bank"],
-        "used-cols" : [ "Respondent.ID", "Wave", "Province", "Segment", "S0_Sample", "Q1_Main Bank 1","Q9a_R1_Debit Card_Main Bank 1","Q9a_R2_Credit card_Main Bank 1","Q9a_R4_Banca_Main Bank 1","Q9a_R6_Terms deposit_Main Bank 1","Q9a_R7_Bond/Funds_Main Bank 1","Q9a_R8_Secured Loan_Main Bank 1","Q9a_R9_Unsecured Loan/ Overdraft without Collateral_Main Bank 1","Q10_Main bank 2","Q17a_R1_Debit Card_Main Bank 2","Q17a_R2_Credit card_Main Bank 2","Q17a_R4_Banca_Main Bank 2","Q17a_R6_Terms deposit_Main Bank 2","Q17a_R7_Bond/Funds_Main Bank 2","Q17a_R8_Secured Loan_Main Bank 2","Q17a_R9_Unsecured Loan/ Overdraft without Collateral_Main Bank 2" ],
-        "rename-columns" : {
-            "Respondent.ID" : "ID",
-            "Q1_Main Bank 1" : "Bank###1",
-            "Q9a_R1_Debit Card_Main Bank 1" : "Q9a_R1###1",
-            "Q9a_R2_Credit card_Main Bank 1" : "Q9a_R2###1",
-            "Q9a_R4_Banca_Main Bank 1" : "Q9a_R4###1",
-            "Q9a_R6_Terms deposit_Main Bank 1" : "Q9a_R6###1",
-            "Q9a_R7_Bond/Funds_Main Bank 1" : "Q9a_R7###1",
-            "Q9a_R8_Secured Loan_Main Bank 1" : "Q9a_R8###1",
-            "Q9a_R9_Unsecured Loan/ Overdraft without Collateral_Main Bank 1" : "Q9a_R9###1",
-            "Q10_Main bank 2" : "Bank###2",
-            "Q17a_R1_Debit Card_Main Bank 2" : "Q9a_R1###2",
-            "Q17a_R2_Credit card_Main Bank 2" : "Q9a_R2###2",
-            "Q17a_R4_Banca_Main Bank 2" : "Q9a_R4###2",
-            "Q17a_R6_Terms deposit_Main Bank 2" : "Q9a_R6###2",
-            "Q17a_R7_Bond/Funds_Main Bank 2" : "Q9a_R7###2",
-            "Q17a_R8_Secured Loan_Main Bank 2" : "Q9a_R8###2",
-            "Q17a_R9_Unsecured Loan/ Overdraft without Collateral_Main Bank 2" : "Q9a_R9###2"
-        }, 
-        "wide_to_long" : {
-            "stubnames" : {
-                "Bank" : "Main Bank 1",
-                "Q9a_R1" : "Debit Card",
-                "Q9a_R2" : "Credit card",
-                "Q9a_R4" : "Banca",
-                "Q9a_R6" : "Terms deposit",
-                "Q9a_R7" : "Bond",
-                "Q9a_R8" : "Secured Loan",
-                "Q9a_R9" : "Unsecured Loan"
-            },
-            "i-cols" : ["ID", "Wave", "Province", "Segment", "S0_Sample"],
-            "j-col" : "Order"
-        },
-        "stack" : {
-            "group_by" : ["ID", "Wave", "Province", "Segment", "S0_Sample", "Bank"],
-            "renamed_columns" : {
-                "level_6" : "Product", "0" : "CSAT_Score"
-            },
-            "replaced_categories" : {
-                "Q9a_R1" : "Debit Card",
-                "Q9a_R2" : "Credit card",
-                "Q9a_R4" : "Banca",
-                "Q9a_R6" : "Terms deposit",
-                "Q9a_R7" : "Bond",
-                "Q9a_R8" : "Secured Loan",
-                "Q9a_R9" : "Unsecured Loan"
-            }
-        },
-        "drop-na-columns" : ["Product", "CSAT_Score"],
-        "chart" : {
-            "name" : "CSAT",
-            "title" : "CSAT Product",
-            "type" : "CSATBarChartWidget",
-            "xAxis" : {
-                "label" : "CSAT_Score",
-                "format" : "number",
-                "min" : 0,
-                "max" : 100
-            },
-            "yAxis" : {
-                "label" : "Product",
-                "categories" : [ "Debit Card", "Credit Card", "Banca", "Terms deposit", "Bond", "Unsecured Loan", "Secured loan" ]
-            },
-            "style": {
-                "barColor": "#4caf50",
-                "barHeight": 20,
-                "gap": 10,
-                "showValueLabel": true
-            }
-        }
-    },
-    "csat-dataset-2" : {
-        "main-filters" : {
-            "Wave" : "",
-            "Province" : [],
-            "Segment" : [],
-            "S0_Sample" : []
-        },
-        "chart_name" : "CSAT",
-        "chart_title" : "CSAT Channel",
-        "chart_type" : "CSATBarChartWidget",
-        "group_by" : ["Bank", "Wave"],
-        "used-cols" : [ "Respondent.ID", "Wave", "Province", "Segment", "S0_Sample", "Q1_Main Bank 1","Q9_R1_Branch_Main Bank 1","Q9_R2_Telesales_Main Bank 1","Q9_R3_Call Center_Main Bank 1","Q9_R4_Fanpage_Main Bank 1","Q9_R6_ATM_Main Bank 1","Q10_Main bank 2","Q17_R1_Branch_Main Bank 2","Q17_R2_Telesales_Main Bank 2","Q17_R3_Call Center_Main Bank 2","Q17_R4_Fanpage_Main Bank 2","Q17_R6_ATM_Main Bank 2" ],
-        "rename-columns" : {
-            "Respondent.ID" : "ID",
-            "Q1_Main Bank 1" : "Bank###1",
-            "Q9_R1_Branch_Main Bank 1" : "Q9_R1###1",
-            "Q9_R2_Telesales_Main Bank 1" : "Q9_R2###1",
-            "Q9_R3_Call Center_Main Bank 1" : "Q9_R3###1",
-            "Q9_R4_Fanpage_Main Bank 1" : "Q9_R4###1",
-            "Q9_R6_ATM_Main Bank 1" : "Q9_R6###1",
-            "Q10_Main bank 2" : "Bank###2",
-            "Q17_R1_Branch_Main Bank 2" : "Q9_R1###2",
-            "Q17_R2_Telesales_Main Bank 2" : "Q9_R2###2",
-            "Q17_R3_Call Center_Main Bank 2" : "Q9_R3###2",
-            "Q17_R4_Fanpage_Main Bank 2" : "Q9_R4###2",
-            "Q17_R6_ATM_Main Bank 2" : "Q9_R6###2"
-        }, 
-        "wide_to_long" : {
-            "stubnames" : {
-                "Bank" : "Main Bank 1",
-                "Q9_R1" : "Branch",
-                "Q9_R2" : "Telesales",
-                "Q9_R3" : "Call Center",
-                "Q9_R4" : "Fanpage",
-                "Q9_R6" : "ATM"
-            },
-            "i-cols" : ["ID", "Wave", "Province", "Segment", "S0_Sample"],
-            "j-col" : "Order"
-        },
-        "stack" : {
-            "group_by" : ["ID", "Wave", "Province", "Segment", "S0_Sample", "Bank"],
-            "renamed_columns" : {
-                "level_6" : "Channel", "0" : "CSAT_Score"
-            },
-            "replaced_categories" : {
-                "Q9_R1" : "Branch",
-                "Q9_R2" : "Telesales",
-                "Q9_R3" : "Call Center",
-                "Q9_R4" : "Fanpage",
-                "Q9_R6" : "ATM"
-            }
-        },
-        "drop-na-columns" : ["Channel", "CSAT_Score"],
-        "chart" : {
-            "name" : "CSAT",
-            "title" : "CSAT Channel",
-            "type" : "CSATBarChartWidget",
-            "xAxis" : {
-                "label" : "CSAT_Score",
-                "format" : "number",
-                "min" : 0,
-                "max" : 100
-            },
-            "yAxis" : {
-                "label" : "Channel",
-                "categories" : ["Branch", "Telesales", "Call Center", "Fanpage", "ATM"]
-            },
-            "style": {
-                "barColor": "#4caf50",
-                "barHeight": 20,
-                "gap": 10,
-                "showValueLabel": true
-            }
-        }
+        ]
     }
-    
 }
