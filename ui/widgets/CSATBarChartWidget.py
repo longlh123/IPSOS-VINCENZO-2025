@@ -40,16 +40,16 @@ class CSATBarChartWidget(QWidget):
     def plot_csat_bar_chart(self):
         self.ax.clear()
 
-        products = [ row['product'] for i, row in self.chart_data.iterrows() ]
+        categories = [ row['category'] for i, row in self.chart_data.iterrows() ]
         sample_sizes = [ row['n'] for i, row in self.chart_data.iterrows() ]
         scores = [ row['p'] for i, row in self.chart_data.iterrows() ]
         changes = [ row['change'] for i, row in self.chart_data.iterrows() ]
         ranks = [ row['rank'] for i, row in self.chart_data.iterrows() ]
         directions = [ row['direction'] for i, row in self.chart_data.iterrows() ]
         
-        pos = np.arange(len(products))
+        pos = np.arange(len(categories))
 
-        rects = self.ax.barh(pos, scores, color="#e60013", align='center', height=0.5, tick_label=products)
+        rects = self.ax.barh(pos, scores, color="#e60013", align='center', height=0.5, tick_label=categories)
 
         self.ax.set_xlim([0, 100])
         # self.ax.xaxis.set_major_locator(MaxNLocator(11))
@@ -76,7 +76,7 @@ class CSATBarChartWidget(QWidget):
 
 
         self.ax.set_yticks(pos)
-        self.ax.set_yticklabels(products, fontsize=9)
+        self.ax.set_yticklabels(categories, fontsize=9)
         self.ax.set_xlim(0, max(scores) + 25)
         self.ax.invert_yaxis()  # Highest at top
         self.ax.set_xlabel("CSAT (%)")

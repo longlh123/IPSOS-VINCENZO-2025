@@ -14,8 +14,9 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib.pyplot as plt
 
 class NPSBarChartWidget(QWidget):
-    def __init__(self, chart_data, parent=None):
+    def __init__(self, chart_format, chart_data, parent=None):
         super().__init__(parent)
+        self.chart_format = chart_format
         self.chart_data = chart_data
         layout = QVBoxLayout(self)
 
@@ -37,7 +38,7 @@ class NPSBarChartWidget(QWidget):
         ax = self.ax
         ax.clear()
 
-        banks = list(self.chart_data["Q1"].unique())
+        banks = list(self.chart_data["Bank"].unique())
         waves = sorted(self.chart_data["Wave"].unique())
 
         group_count = len(banks)
@@ -53,7 +54,7 @@ class NPSBarChartWidget(QWidget):
         colors = ["#008a3e", "#ffc000", "#7f7f7f"]
 
         for i, wave in enumerate(waves):
-            subset = self.chart_data[self.chart_data["Wave"] == wave].set_index("Q1").reindex(banks).reset_index()
+            subset = self.chart_data[self.chart_data["Wave"] == wave].set_index("Bank").reindex(banks).reset_index()
 
             promoter = subset["Promoter"].fillna(0)
             passive = subset["Passive"].fillna(0)
@@ -65,14 +66,14 @@ class NPSBarChartWidget(QWidget):
             ax.bar(x_pos, detractor, bar_width, color=colors[2], label=f"{wave} - Detractor" if i == 0 else None)
             ax.bar(x_pos, passive, bar_width, bottom=detractor, color=colors[1], label=f"{wave} - Passive" if i == 0 else None)
             ax.bar(x_pos, promoter, bar_width, bottom=detractor + passive, color=colors[0], label=f"{wave} - Promoter" if i == 0 else None)
-
-            for xi, p in zip(x_pos, promoter):
-                if p > 0:
-                    ax.text(xi, p / 2, f"{p:.0f}%", ha="center", va="center", fontsize=8, color="white")
             
             for xi, p, base in zip(x_pos, passive, detractor):
                 if p > 0:
                     ax.text(xi, base + p / 2, f"{p:.0f}%", ha="center", va="center", fontsize=8, color="black")
+
+            for xi, p, base_1, base_2 in zip(x_pos, promoter, detractor, passive):
+                if p > 0:
+                    ax.text(xi, base_1 + base_2 + p / 2, f"{p:.0f}%", ha="center", va="center", fontsize=8, color="white")
 
             for xi, yi in zip(x_pos, nps):
                 y_top = promoter[i] + passive[i] + detractor[i] + 5

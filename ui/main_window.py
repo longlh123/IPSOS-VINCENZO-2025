@@ -98,7 +98,7 @@ class MainWindow(QMainWindow):
                 report_tab = NPSReportTab(data=self.df, dataset=dataset)
                 
                 if report_tab is not None:
-                    self.tab_widget.addTab(report_tab, dataset.get('chart_title', ''))
+                    self.tab_widget.addTab(report_tab, dataset.get('chart', {}).get('title', ''))
         except Exception as e:
             self.logger.error(f"Không tìm thấy file cấu hình: {config_path}")
             QMessageBox.critical(
