@@ -1,6 +1,6 @@
 {
     "nps-dataset-1" : {
-        "title": "TECHCOMBANK",
+        "title": "TECHCOMBANK - BANKS",
         "time-mode" : [
             { "name": "wave", "label": "Wave", "checked": 1 },
             { "name": "quarter", "label": "Quarter", "checked": 0 }
@@ -16,7 +16,7 @@
             "Tier" : []
         },
         "group-by" : ["Bank", "Wave", "Quarter"],
-        "used-cols" : [ "Respondent.ID", "Wave", "Quarter", "Province", "Segment", "Region", "_Q5_Customer Type", "_Q4Bis_Tier", "_Q5a_Persona", "_Q20a_Overall CSAT Product", "_Q6e_Main bank", "_Main bank_Comp 1", "_Main bank_Comp 2", "_Q9_NPS TCB", "_Q9_NPS Comp 1", "_Q9_NPS Comp 2" ],
+        "used-cols" : [ "Respondent.ID", "Wave", "Quarter", "Province", "Segment", "Region", "_Q5_Customer Type", "_Q4Bis_Tier", "_Q5a_Persona", "_Q6e_Main bank", "_Main bank_Comp 1", "_Main bank_Comp 2", "_Q9_NPS TCB", "_Q9_NPS Comp 1", "_Q9_NPS Comp 2" ],
         "replaced-columns" : {
             "_Q6e_Main bank" : "Techcombank"
         },
@@ -25,7 +25,6 @@
             "_Q5_Customer Type": "Customer Type",
             "_Q4Bis_Tier": "Tier",
             "_Q5a_Persona": "Personal",
-            "_Q20a_Overall CSAT Product": "CSAT_Score",
             "_Q6e_Main bank" : "Bank###1",
             "_Q9_NPS TCB" : "NPS_Score###1",
             "_Main bank_Comp 1" : "Bank###2",
@@ -78,6 +77,59 @@
                 "yAxis" : {
                     "label" : "Bank",
                     "categories" : ["ACB", "BIDV", "MBBank", "Techcombank", "VPBank", "Vietcombank"]
+                },
+                "style": {
+                    "colors": ["#4caf50","#e3e4e6","#e3e4e6","#e3e4e6","#e3e4e6"],
+                    "barHeight": 20,
+                    "gap": 10,
+                    "showValueLabel": true
+                }
+            }
+        ]
+    },
+    "nps-dataset-2" : {
+        "title": "TECHCOMBANK",
+        "time-mode" : [
+            { "name": "wave", "label": "Wave", "checked": 1 },
+            { "name": "quarter", "label": "Quarter", "checked": 0 }
+        ],
+        "main-filters" : {
+            "Wave" : [],
+            "Quarter" : [],
+            "Bank" : [],
+            "Province" : [],
+            "Segment" : [],
+            "Region" : [],
+            "Customer Type" : [],
+            "Tier" : [],
+            "_Q6bis_Product" : []
+        },
+        "group-by" : ["Bank", "Wave", "Quarter"],
+        "used-cols" : [ "Respondent.ID", "Wave", "Quarter", "Province", "Segment", "Region", "_Q5_Customer Type", "_Q4Bis_Tier", "_Q5a_Persona", "_Q6bis_Product", "_Q20a_Overall CSAT Product", "_Q20d_R1_Completeness of card benefits information", "_Q20d_R2_Quality of Card Issuance Consultation", "_Q20d_R3_Simplicity of registration procedures", "_Q20d_R4_Card issuance time", "_Q20d_R5_Quality of Credit Card Issuance Consultation", "_Q20d_R6_Quality of Loan Product Consultation", "_Q20d_R7_Completeness of loan information", "_Q20d_R8_Simplicity of loan application and procedures", "_Q20d_R9_Loan application processing time", "_Q20d_R10_Competitiveness of loan interest rates/fees", "_Q20d_R11_Competitiveness of products", "_Q20d_R12_Quality of product consultation", "_Q20d_R13_Completeness of product information", "_Q20d_R14_Simplicity of registration process/documents", "_Q20d_R15_Application processing time", "_Q20d_R16_Competitiveness of products", "_Q20d_R17_Quality of Consultation", "_Q20d_R18_Completeness of information", "_Q20d_R19_Attractiveness of savings products", "_Q20d_R20_Ease of opening a savings account", "_Q20d_R21_Diversity of savings products", "_Q20d_R22_Quality of Bond/Fund consultation", "_Q20d_R23_Reputation of bond/fund issuing organization", "_Q20d_R24_Completeness of Bond/Fund information", "_Q20d_R25_Diversity/attractiveness of products", "_Q20d_R26_Simplicity of insurance application procedures/documents", "_Q20d_R27_Attractiveness of insurance products", "_Q20d_R28_Quality of Banca Consultation", "_Q20d_R29_Reputation of the insurance brand", "_Q20d_R30_Attractiveness of promotional programs", "_Q20d_R31_Completeness of product information across channels", "_Q20d_R32_Application approval and disbursement time", "_Q20d_R33_Quality of Shopcash product consultation", "_Q20d_R34_Quality of SoftPOS product consultation", "_Q20d_R35_Simplicity of SoftPOS registration process/documents", "_Q20d_R36_SoftPOS registration application processing time", "_Q20d_R37_Level of feature information adequacy", "_Q20d_R38_Ease of feature registration and usage", "_Q20d_R39_Clarity of feature information", "_Q20d_R40_Attractiveness and frequency of promotional programs", "_Q20d_R41_Competitiveness of fees", "_Q20d_R42_Form/Quality of Physical Card", "_Q20d_R43_Stability of card usage", "_Q20d_R44_Competitiveness of interest rates/fees", "_Q20d_R45_Credit Card Limit", "_Q20d_R46_Card Security", "_Q20d_R47_Quality of Support Services", "_Q20d_R48_Loan Information Updates", "_Q20d_R49_Savings account information updates", "_Q20d_R50_Ease of closing a savings account", "_Q20d_R51_Ease of performing transactions on the app", "_Q20d_R52_Quality of claim payment services", "_Q20d_R53_After-sales service", "_Q20d_R54_Ease of using funds", "_Q20d_R55_Competitiveness of product", "_Q20d_R56_Ease of using SoftPOS", "_Q20d_R57_Stability of SoftPOS usage", "_Q20d_R58_Competitiveness of fees when using SoftPOS", "_Q20d_R59_Diversity of SoftPOS features", "_Q20d_R60_Attractiveness of automatic profit interest rates", "_Q20d_R61_Ease of profit monitoring and management" ],
+        "renamed-columns" : {
+            "Respondent.ID" : "ID",
+            "_Q5_Customer Type": "Customer Type",
+            "_Q4Bis_Tier": "Tier",
+            "_Q5a_Persona": "Personal",
+            "_Q6bis_Product": "Product",
+            "_Q20a_Overall CSAT Product": "CSAT_Score"
+        },
+        "drop-na-columns" : ["Bank", "NPS_Score"],
+        "charts" : [
+            {
+                "name" : "CSAT",
+                "title" : "CSAT Product",
+                "type" : "CSATBarChartWidget",
+                "xAxis" : {
+                    "label" : "CSAT_Score",
+                    "categories" : [ "CSAT_5", "CSAT_4", "CSAT_3", "CSAT_2", "CSAT_1" ],
+                    "format" : "percent",
+                    "min" : 0,
+                    "max" : 100
+                },
+                "yAxis" : {
+                    "label" : "Bank",
+                    "categories" : [ "ACB", "BIDV", "MBBank", "Techcombank", "VPBank", "Vietcombank" ]
                 },
                 "style": {
                     "colors": ["#4caf50","#e3e4e6","#e3e4e6","#e3e4e6","#e3e4e6"],

@@ -11,7 +11,8 @@
             "Bank" : [],
             "Segment" : [],
             "City" : [],
-            "Sample" : []
+            "Sample" : [],
+            "NPS_Category" : []
         },
         "group-by" : ["Bank", "Wave", "Quarter"],
         "used-cols" : [ "DummyID", "Wave", "Quarter", "S1c", "Q0", "S0", "Q1", "Q2", "Q9a_R1", "Q9a_R2", "Q9a_R4", "Q9a_R6", "Q9a_R7", "Q9a_R8", "Q9a_R9", "Q9_R1", "Q9_R2", "Q9_R3", "Q9_R4", "Q9_R6" ],
@@ -22,6 +23,9 @@
             "S0": "Sample",
             "Q1" : "Bank",
             "Q2" : "NPS_Score"
+        },
+        "add-custom-columns": {
+            "NPS_Category": "('Promoter' if row['NPS_Score'] >= 9 else ('Passive' if row['NPS_Score'] >= 7 else 'Detractor'))"
         },
         "charts" : [
             {
@@ -47,7 +51,7 @@
             },
             {
                 "name" : "CSAT",
-                "title" : "CSAT Product",
+                "title" : "CSAT Channel",
                 "type" : "CSATBarChartWidget",
                 "filter-mapping": {
                     "Branch": "Q9_R1",
@@ -58,6 +62,36 @@
                 },
                 "xAxis" : {
                     "label" : "Q9_R1",
+                    "categories" : [ "CSAT_5", "CSAT_4", "CSAT_3", "CSAT_2", "CSAT_1" ],
+                    "format" : "percent",
+                    "min" : 0,
+                    "max" : 100
+                },
+                "yAxis" : {
+                    "label" : "Bank",
+                    "categories" : ["ACB", "BIDV", "MBBank", "Techcombank", "VPBank", "Vietcombank"]
+                },
+                "style": {
+                    "colors": ["#4caf50","#e3e4e6","#e3e4e6","#e3e4e6","#e3e4e6"],
+                    "barHeight": 20,
+                    "gap": 10,
+                    "showValueLabel": true
+                }
+            },
+            {
+                "name" : "CSAT",
+                "title" : "CSAT Product",
+                "type" : "CSATBarChartWidget",
+                "filter-mapping": {
+                    "Debit Card": "Q9a_R1",
+                    "Credit Card": "Q9a_R2",
+                    "Banca": "Q9a_R4",
+                    "Terms Deposit": "Q9a_R6",
+                    "Bond/ Funds": "Q9a_R7",
+                    "Secured Loan": "Q9a_R8"
+                },
+                "xAxis" : {
+                    "label" : "Q9a_R1",
                     "categories" : [ "CSAT_5", "CSAT_4", "CSAT_3", "CSAT_2", "CSAT_1" ],
                     "format" : "percent",
                     "min" : 0,
