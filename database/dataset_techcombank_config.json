@@ -16,7 +16,7 @@
             "Tier" : []
         },
         "group-by" : ["Bank", "Wave", "Quarter"],
-        "used-cols" : [ "Respondent.ID", "Wave", "Quarter", "Province", "Segment", "Region", "_Q5_Customer Type", "_Q4Bis_Tier", "_Q5a_Persona", "_Q6e_Main bank",	"_Main bank_Comp 1", "_Main bank_Comp 2", "_Q9_NPS TCB", "_Q9_NPS Comp 1", "_Q9_NPS Comp 2" ],
+        "used-cols" : [ "Respondent.ID", "Wave", "Quarter", "Province", "Segment", "Region", "_Q5_Customer Type", "_Q4Bis_Tier", "_Q5a_Persona", "_Q20a_Overall CSAT Product", "_Q6e_Main bank", "_Main bank_Comp 1", "_Main bank_Comp 2", "_Q9_NPS TCB", "_Q9_NPS Comp 1", "_Q9_NPS Comp 2" ],
         "replaced-columns" : {
             "_Q6e_Main bank" : "Techcombank"
         },
@@ -25,6 +25,7 @@
             "_Q5_Customer Type": "Customer Type",
             "_Q4Bis_Tier": "Tier",
             "_Q5a_Persona": "Personal",
+            "_Q20a_Overall CSAT Product": "CSAT_Score",
             "_Q6e_Main bank" : "Bank###1",
             "_Q9_NPS TCB" : "NPS_Score###1",
             "_Main bank_Comp 1" : "Bank###2",
@@ -58,6 +59,28 @@
                 },
                 "style": {
                     "colors": ["#008a3e", "#ffc000", "#7f7f7f"],
+                    "barHeight": 20,
+                    "gap": 10,
+                    "showValueLabel": true
+                }
+            },
+            {
+                "name" : "CSAT",
+                "title" : "CSAT Product",
+                "type" : "CSATBarChartWidget",
+                "xAxis" : {
+                    "label" : "CSAT_Score",
+                    "categories" : [ "CSAT_5", "CSAT_4", "CSAT_3", "CSAT_2", "CSAT_1" ],
+                    "format" : "percent",
+                    "min" : 0,
+                    "max" : 100
+                },
+                "yAxis" : {
+                    "label" : "Bank",
+                    "categories" : ["ACB", "BIDV", "MBBank", "Techcombank", "VPBank", "Vietcombank"]
+                },
+                "style": {
+                    "colors": ["#4caf50","#e3e4e6","#e3e4e6","#e3e4e6","#e3e4e6"],
                     "barHeight": 20,
                     "gap": 10,
                     "showValueLabel": true

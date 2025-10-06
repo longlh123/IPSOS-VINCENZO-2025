@@ -9,7 +9,7 @@
             "_Q4Bis_Tier" : [],
             "_Q5a_Persona" : []
         },
-        "group-by" : ["Bank", "Wave"],
+        "group-by" : [ "Bank", "Wave" ],
         "used-cols" : [ "Respondent.ID", "Wave", "Province", "Segment", "Region", "_Q5_Customer Type", "_Q4Bis_Tier", "_Q5a_Persona", "_Q6e_Main bank",	"_Main bank_Comp 1", "_Main bank_Comp 2", "_Q9_NPS TCB", "_Q9_NPS Comp 1", "_Q9_NPS Comp 2" ],
         "replaced-columns" : {
             "_Q6e_Main bank" : "Techcombank"

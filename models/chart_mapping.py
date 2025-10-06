@@ -1,4 +1,5 @@
 import pandas as pd
+import re
 from models.dataset_transformer import DatasetTransformer
 
 def calculate_nps_components(group, root_data, chart):
@@ -29,14 +30,30 @@ def calculate_csat_components(group, root_data, chart):
     csat_score = chart.get('xAxis', {}).get('label')
     
     col = group[csat_score].astype(str).str.strip()
+    col = col.str.replace(r'\s+', ' ', regex=True)  # gom nhiều khoảng trắng thành 1
+    col = col.str.lower()  # (tùy chọn) đồng bộ viết thường
 
-    filtered = col[~col.isin(['I do not use this bank product', 'Not use in recent 1 month'])]
-
-    percentages = filtered.value_counts(normalize=True, dropna=False) * 100
+    exclude_values = [
+        'i do not use this bank product',
+        'not use in recent 1 month',
+        'not experience yet/ not remember'
+    ]
+    
+    filtered = col[~col.isin(exclude_values)].dropna()
+    filtered = filtered[filtered != 'nan']
+    
+    percentages = filtered.value_counts(normalize=True, dropna=True) * 100
 
     for key, value in percentages.items():
-        if f"CSAT_{key}" in csat:
-            csat[f"CSAT_{key}"] = round(value, 2)
+        m = re.search(pattern="^\d+", string=key)
+
+        if m:
+            key_name = key[m.regs[0][0]: m.regs[0][1]]
+        else:
+            key_name = key
+
+        if f"CSAT_{key_name}" in csat:
+            csat[f"CSAT_{key_name}"] = round(value, 2)
 
     return pd.Series(csat)
 
