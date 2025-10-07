@@ -9,6 +9,6 @@ __pycache__/
 *.pyo
 
 env/
-*.xlsx
-*.csv
-*.log
+/*.xlsx
+/*.csv
+/*.log
