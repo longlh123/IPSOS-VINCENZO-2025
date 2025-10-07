@@ -41,7 +41,7 @@ def calculate_csat_components(group, root_data, chart):
     
     filtered = col[~col.isin(exclude_values)].dropna()
     filtered = filtered[filtered != 'nan']
-    
+
     percentages = filtered.value_counts(normalize=True, dropna=True) * 100
 
     for key, value in percentages.items():

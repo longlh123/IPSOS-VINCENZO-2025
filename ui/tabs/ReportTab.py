@@ -143,7 +143,7 @@ class ReportTab(QWidget):
 
             if len(selected_items) > 0:
                 filtered_chart_data = filtered_chart_data.loc[filtered_chart_data[key].isin(selected_items)]
-        
+
         return filtered_chart_data
 
     def get_group_items(self):
@@ -205,8 +205,16 @@ class ReportTab(QWidget):
 
             filter_layout.addWidget(QLabel(chart_config.get('title')), 0, 0)
 
+            filtered_chart_data = self.load_chart_data()
+
+            filter_list = []
+
+            for key, col in chart_config.get('filter-mapping', {}).items():
+                if not filtered_chart_data[col].dropna().empty:
+                    filter_list.append(key)
+
             filter_box = QComboBox()
-            filter_box.addItems(chart_config.get('filter-mapping', {}).keys())
+            filter_box.addItems(filter_list)
             filter_box.currentTextChanged.connect(on_filter_combobox_changed)
             filter_box.setCurrentIndex(0)
 
@@ -322,14 +330,21 @@ class ReportTab(QWidget):
     
     def set_filters(self, data, filters):
         for column_name in filters.keys():
-            filters[column_name] = data[column_name].dropna().unique().tolist()
+            filter_list = data[column_name].dropna().unique().tolist()
+            
 
             if column_name in self.multiselectitems:
-                self.multiselectitems[column_name].set_items(filters[column_name])
+                self.multiselectitems[column_name].set_items(filter_list)
+
+                filters[column_name] = []
             elif column_name in self.comboboxitems:
                 self.comboboxitems[column_name].clear()
-                self.comboboxitems[column_name].addItems(filters[column_name])
+                self.comboboxitems[column_name].addItems(filter_list)
                 self.comboboxitems[column_name].setCurrentIndex(0)
+
+                filters[column_name] = filter_list[0]
+
+
 
     def clear_layout(self):
         while self.scroll_layout.count():
