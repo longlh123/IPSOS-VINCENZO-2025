@@ -203,7 +203,7 @@ class ReportTab(QWidget):
             filter_layout.setColumnStretch(1, 1)
             filter_layout.setColumnStretch(3, 1)
 
-            filter_layout.addWidget(QLabel("Product"), 0, 0)
+            filter_layout.addWidget(QLabel(chart_config.get('title')), 0, 0)
 
             filter_box = QComboBox()
             filter_box.addItems(chart_config.get('filter-mapping', {}).keys())

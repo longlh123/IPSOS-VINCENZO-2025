@@ -12,6 +12,7 @@ class DatasetTransformer:
 
         self._replaced_columns()
         self._renamed_columns()
+        self._add_custom_columns()
         self._wide_to_long()
         self._stack()
         self._drop_na_columns()
@@ -30,6 +31,18 @@ class DatasetTransformer:
 
         if rename_map:
             self.data.rename(columns=rename_map, inplace=True)
+
+    def _add_custom_columns(self):
+        add_col_map = self.config.get('add-custom-columns', {})
+
+        if not add_col_map:
+            return
+        
+        for new_col, expr in add_col_map.items():
+            self.data[new_col] = self.data.apply(
+                lambda row: eval(expr, {}, {"row": row}),
+                axis=1
+            )
 
     def _wide_to_long(self):
         wtl_map = self.config.get("wide-to-long", {})
