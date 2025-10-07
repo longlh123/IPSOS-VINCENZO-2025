@@ -41,19 +41,15 @@ def calculate_csat_components(group, root_data, chart):
     
     filtered = col[~col.isin(exclude_values)].dropna()
     filtered = filtered[filtered != 'nan']
+    
+    filtered = filtered.str.replace(r'\.0$', '', regex=True)
+    filtered = pd.to_numeric(filtered, errors='coerce').dropna().astype(int)
 
     percentages = filtered.value_counts(normalize=True, dropna=True) * 100
 
     for key, value in percentages.items():
-        m = re.search(pattern="^\d+", string=key)
-
-        if m:
-            key_name = key[m.regs[0][0]: m.regs[0][1]]
-        else:
-            key_name = key
-
-        if f"CSAT_{key_name}" in csat:
-            csat[f"CSAT_{key_name}"] = round(value, 2)
+        if f"CSAT_{key}" in csat:
+            csat[f"CSAT_{key}"] = round(value, 2)
 
     return pd.Series(csat)
 
