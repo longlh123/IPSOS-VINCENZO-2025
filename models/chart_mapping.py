@@ -6,11 +6,20 @@ def calculate_nps_components(group, root_data, chart):
     
     nps_score = chart.get('xAxis', {}).get('label')
 
-    total = len(group)
+    col = group[nps_score].astype(str).str.strip()
+    col = col.str.replace(r'\s+', ' ', regex=True)  # gom nhiều khoảng trắng thành 1
+    col = col.str.lower()  # (tùy chọn) đồng bộ viết thường
 
-    promoters = ((group[nps_score] == 9) | (group[nps_score] == 10)).sum()
-    detractors = ((group[nps_score] >= 0) & (group[nps_score] <= 6)).sum()
-    passives = ((group[nps_score] >= 7) & (group[nps_score] <= 8)).sum()
+    filtered = col[col != 'nan']
+    
+    filtered = filtered.str.replace(r'\.0$', '', regex=True)
+    filtered = pd.to_numeric(filtered, errors='coerce').dropna().astype(int)
+
+    total = len(filtered)
+
+    promoters = ((filtered == 9) | (filtered == 10)).sum()
+    detractors = ((filtered >= 0) & (filtered <= 6)).sum()
+    passives = ((filtered >= 7) & (filtered <= 8)).sum()
 
     return pd.Series({
         "Promoter" : round(promoters / total * 100, 2),
