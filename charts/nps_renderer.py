@@ -1,5 +1,7 @@
 from charts.base_renderer import BaseChartRenderer
 import numpy as np
+import pandas as pd
+
 
 class NPSBarChartRenderer(BaseChartRenderer):
     def render(self):
@@ -13,7 +15,11 @@ class NPSBarChartRenderer(BaseChartRenderer):
 
         if len(self.group_by) > 1:
             subset_name = self.group_by[1]
-            yAxis_2_categories = sorted(df[subset_name].unique())
+
+            df['wave_parsed'] = df[subset_name].apply(self.parse_wave_or_quarter)
+            df_sorted = df.sort_values('wave_parsed')
+
+            yAxis_2_categories = df_sorted[subset_name].unique()
         
         colors = self.config['style'].get('colors')
 
@@ -61,3 +67,14 @@ class NPSBarChartRenderer(BaseChartRenderer):
         self.ax.legend(loc="upper left", bbox_to_anchor=(1, 1))
         
         return self.fig
+    
+    def parse_wave_or_quarter(self, x):
+        x = x.strip()
+        y = x.split("'")
+
+        if y[0] == 'Q1' and y[1] == '25':
+            x = x.replace('Q1', 'Jan')
+        
+        return pd.to_datetime(x.replace("'", ""), format="%b%y", errors="coerce")
+    
+
