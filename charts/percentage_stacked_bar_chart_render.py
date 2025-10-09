@@ -1,5 +1,6 @@
 from charts.base_renderer import BaseChartRenderer
 import numpy as np
+import pandas as pd
 
 class PercentageStackedBarChartRenderer(BaseChartRenderer):
     def render(self):
@@ -12,7 +13,11 @@ class PercentageStackedBarChartRenderer(BaseChartRenderer):
         title = self.config.get('title', 'CSAT Chart')
 
         yAxis_label = self.config['yAxis'].get('label', 'Wave')
-        yAxis_categories = sorted(df[self.group_by[0]].unique())  # ["Apr'25", "May'25", "Q1'25"]
+
+        df['wave_parsed'] = df[self.group_by[0]].apply(self.parse_wave_or_quarter)
+        df_sorted = df.sort_values('wave_parsed')
+
+        yAxis_categories = df_sorted[self.group_by[0]].unique()  # ["Apr'25", "May'25", "Q1'25"]
 
         bar_width = 0.5
         x_pos = np.arange(len(yAxis_categories))
@@ -51,3 +56,12 @@ class PercentageStackedBarChartRenderer(BaseChartRenderer):
         self.ax.legend(loc="upper left", bbox_to_anchor=(1, 1))
 
         return self.fig
+
+    def parse_wave_or_quarter(self, x):
+        x = x.strip()
+        y = x.split("'")
+
+        if y[0] == 'Q1' and y[1] == '25':
+            x = x.replace('Q1', 'Jan')
+        
+        return pd.to_datetime(x.replace("'", ""), format="%b%y", errors="coerce")
