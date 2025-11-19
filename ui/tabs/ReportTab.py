@@ -163,6 +163,21 @@ class ReportTab(QWidget):
 
         for chart_config in self.dataset.get('charts', []):
             filtered_chart_data = self.load_chart_data()
+            
+            if "filter-mapping" in chart_config.keys():
+                renamed_columns = {
+                    f"level_{len([col for col in filtered_chart_data.columns if col not in chart_config['filter-mapping'].keys()])}" : "Attribute",
+                    0 : "Attribute_Score"
+                }
+
+                if "Attribute" not in group_items:
+                    group_items.append("Attribute")
+
+                filtered_chart_data = filtered_chart_data.set_index([col for col in filtered_chart_data.columns if col not in chart_config['filter-mapping'].keys()])
+                filtered_chart_data = filtered_chart_data = filtered_chart_data.stack()
+                filtered_chart_data = filtered_chart_data.reset_index()
+                filtered_chart_data.rename(columns=renamed_columns, inplace=True)
+                filtered_chart_data["Attribute"] = filtered_chart_data["Attribute"].replace(chart_config["filter-mapping"])
 
             calculated_chart_data = map_calculation_chart_components(filtered_chart_data, chart_config, group_items)
             
@@ -174,28 +189,51 @@ class ReportTab(QWidget):
                 
             self.exported_data[chart_config['name']] = calculated_chart_data
         
-    def create_chart_group(self, chart_data, chart_config, group_by):
+    def create_chart_group(self, chart_data, chart_config, group_items):
         chart_group = QGroupBox(chart_config.get('title'))
         chart_group.setMinimumHeight(700)
 
         layout = QVBoxLayout(chart_group)
 
+        self.current_chart_widget = None
+
+        filtered_chart_data = chart_data
+        
         if "filter-mapping" in chart_config.keys():
             def on_filter_combobox_changed(selected):
                 #clear_old_chart
-                for i in reversed(range(layout.count())):
-                    w = layout.itemAt(i).widget()
-                    if isinstance(w, ReportChartWidget):
-                        w.setParent(None)
+                if self.current_chart_widget:
+                    for i in reversed(range(layout.count())):
+                        w = layout.itemAt(i).widget()
+                        if isinstance(w, ReportChartWidget):
+                            w.setParent(None)
+                
+                    self.current_chart_widget = None
                 
                 new_config = chart_config.copy()
-                new_config['xAxis']['label'] = chart_config["filter-mapping"][selected]
+                # new_config['xAxis']['label'] = chart_config["filter-mapping"][selected]
 
                 # tạo chart mới
                 filtered_chart_data = self.load_chart_data()
 
-                new_data = map_calculation_chart_components(filtered_chart_data, new_config, group_by)
-                new_chart = ReportChartWidget(new_data, new_config, group_by)
+                if "filter-mapping" in chart_config.keys():
+                    renamed_columns = {
+                        f"level_{len([col for col in filtered_chart_data.columns if col not in chart_config['filter-mapping'].keys()])}" : "Attribute",
+                        0 : "Attribute_Score"
+                    }
+                    
+                    filtered_chart_data = filtered_chart_data.set_index([col for col in filtered_chart_data.columns if col not in chart_config['filter-mapping'].keys()])
+                    filtered_chart_data = filtered_chart_data = filtered_chart_data.stack()
+                    filtered_chart_data = filtered_chart_data.reset_index()
+                    filtered_chart_data.rename(columns=renamed_columns, inplace=True)
+                    filtered_chart_data["Attribute"] = filtered_chart_data["Attribute"].replace(chart_config["filter-mapping"])
+
+                filtered_chart_data = filtered_chart_data.loc[filtered_chart_data['Attribute'] == selected]
+
+                new_data = map_calculation_chart_components(filtered_chart_data, new_config, group_items)
+                new_chart = ReportChartWidget(new_data, new_config, group_items)
+
+                self.current_chart_widget = new_chart
 
                 layout.addWidget(new_chart)
 
@@ -205,13 +243,7 @@ class ReportTab(QWidget):
 
             filter_layout.addWidget(QLabel(chart_config.get('title')), 0, 0)
 
-            filtered_chart_data = self.load_chart_data()
-
-            filter_list = []
-
-            for key, col in chart_config.get('filter-mapping', {}).items():
-                if not filtered_chart_data[col].dropna().empty:
-                    filter_list.append(key)
+            filter_list = set(chart_data['Attribute'].tolist())
 
             filter_box = QComboBox()
             filter_box.addItems(filter_list)
@@ -220,11 +252,14 @@ class ReportTab(QWidget):
 
             filter_layout.addWidget(filter_box, 0, 1)
 
+            filtered_chart_data = chart_data.loc[chart_data['Attribute'] == filter_box.currentText()]
+
             layout.addLayout(filter_layout)
 
-        chart_widget = ReportChartWidget(chart_data, chart_config, group_by)
+        chart_widget = ReportChartWidget(filtered_chart_data, chart_config, group_items)
 
         layout.addWidget(chart_widget)
+        self.current_chart_widget = chart_widget
 
         return chart_group
 
